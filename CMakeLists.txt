@@ -341,6 +341,27 @@ INCLUDE_DIRECTORIES(SYSTEM ${OPENGL_INCLUDE_DIR})
 #ADD_DEFINITIONS(-D)
 # Platform specific definitions
 
+#start GZ
+if(NOT DEFINED _WIN32_WINNT)
+    add_definitions(-D_WIN32_WINNT=0x0601 -Wno-macro-redefined)
+endif()
+if(CMAKE_CXX_COMPILER_ID MATCHES "GNU|Clang")
+    add_compile_options(
+        -Wno-misleading-indentation
+        -Wno-unused-but-set-variable
+        -Wno-register
+        -Wno-deprecated-declarations
+        -Wno-language-extension-token
+        -Wno-ignored-attributes
+        -Wno-invalid-utf8
+        -Wno-unused-const-variable
+        -Wno-null-dereference
+		-Wextra-tokens
+		#-Wstrict-prototypes
+    )
+    add_definitions(-D_LIBCPP_ENABLE_CXX17_REMOVED_BINDERS)
+endif()
+#end GZ
 
 IF(WIN32 AND NOT ANDROID)
     OPTION(OSG_DETERMINE_WIN_VERSION "Wheter to automatically determine current Windows version" ON)
